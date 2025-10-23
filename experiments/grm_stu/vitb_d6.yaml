@@ -1,0 +1,101 @@
+DATA:
+  MAX_SAMPLE_INTERVAL: 200
+  MEAN:
+    - 0.485
+    - 0.456
+    - 0.406
+  SEARCH:
+    CENTER_JITTER: 3
+    FACTOR: 4.0
+    SCALE_JITTER: 0.25
+    SIZE: 256
+    NUMBER: 1
+
+  STD:
+    - 0.229
+    - 0.224
+    - 0.225
+  TEMPLATE:
+    CENTER_JITTER: 0
+    FACTOR: 2.0
+    SCALE_JITTER: 0
+    SIZE: 128
+    NUMBER: 6
+    TRAIN_NUMBER: 3
+  TRAIN:
+    DATASETS_NAME:
+      - LASOT
+      - GOT10K_train
+      - COCO17
+      - TRACKINGNET
+    DATASETS_RATIO:
+      - 1
+      - 1
+      - 1
+      - 1
+    SAMPLE_PER_EPOCH: 60000
+  VAL:
+    DATASETS_NAME:
+    - GOT10K_official_val
+    DATASETS_RATIO:
+    - 1
+    SAMPLE_PER_EPOCH: 10000
+MODEL:
+  PRETRAIN_FILE: 'GRM_vitb_teacher.pth.tar'
+  TGT_TYPE: 'allavg' #allavg,allmax
+  BACKBONE:
+    TYPE: vit_base_depth6
+    STRIDE: 16
+    ADD_CLS_TOKEN: False             # use track_query mechanism
+    RESIDUAL: True
+    FEATURE_SIZE_Z: 8
+    FEATURE_SIZE_X: 16
+#    SELF_DEFORM: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11] # 0.34 [2, 3,4, 5, 6, 7, 8, 9, 10, 11], [5, 6, 7, 8, 9, 10, 11], 0.33 o 0.34 [7, 8, 9, 10, 11], [10, 11]
+    #[2, 3,4, 5, 6, 7, 8, 9, 10, 11],[3,4, 5, 6, 7, 8, 9, 10, 11], [4, 5, 6, 7, 8, 9, 10, 11], 0.33 [5, 6, 7, 8, 9, 10, 11], [7, 8, 9, 10, 11]
+#    SELF_DEFORM: []
+    # RELEVANCE_ATTN: [[3, 6, 9], [None, None, None, 230, None, None, 204, None, None, 179, None, None]]
+    RELEVANCE_ATTN: [[3], [None, None, None, 172, None, None]]
+    # RELEVANCE_ATTN: [[2, 4, 6], [None, None, 172, None, 153, None, 134, None]]
+#    CROSS_DEFORM: [[3, 6, 9], [None, None, None, 1000, None, None, 1000, None, None, 1000, None, None]]
+#    CROSS_DEFORM: [[0, 3, 6, 9], [172, None, None, 153, None, None, 134, None, None, 125, None, None]]
+#    CROSS_DEFORM: [[], [172, None, None, 153, None, None, 134, None, None, 125, None, None]]
+#    USING_ATT_WEIGHTS: [[3, 6, 9], [], []]
+    USING_ATT_WEIGHTS: [[3]]
+    DROP_RATIO: [[0.9], []] #[templates, search]
+#    USING_CLASSIFIERS: [0]
+#    CROSS_DEFORM: []
+  HEAD:
+    TYPE: CENTER
+    NUM_CHANNELS: 256
+TRAIN:
+  BACKBONE_MULTIPLIER: 0.1
+  DROP_PATH_RATE: 0.1
+  BATCH_SIZE: 32 #24
+  EPOCH: 350
+  GIOU_WEIGHT: 2.0
+  L1_WEIGHT: 5.0
+  TRAIN_CLS: False
+  INITIAL_EPOCH: 0
+  GRAD_CLIP_NORM: 0.1
+  LR: 0.0004
+  LR_DROP_EPOCH: 240
+  NUM_WORKER: 12
+  OPTIMIZER: ADAMW
+  SCHEDULER:
+    TYPE: step
+    DECAY_RATE: 0.1
+  VAL_EPOCH_INTERVAL: 20
+  WEIGHT_DECAY: 0.0001
+  KEEP_RATIO: 0.8
+  REMOVE_LAYERS: []
+  INVALID_LAYERS: [4,5,6,7,8,9]  # [0,1,2,3,10,11]
+  DISTILL_LAYERS_STUDENT: []  # [2, 4, 6, 7]
+  DISTILL_LAYERS_TEACHER: []
+TEST:
+  EPOCH: 300
+  SEARCH_FACTOR: 4.0
+  SEARCH_SIZE: 256
+  TEMPLATE_FACTOR: 2.0
+  TEMPLATE_SIZE: 128
+  TEMPLATE_NUMBER: 4
+  MEMORY_THRESHOLD: 1000
