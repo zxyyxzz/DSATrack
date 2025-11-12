@@ -3,6 +3,7 @@
 The official PyTorch implementation of our **NeurIPS 2025** paper:
 
 **Dynamic Semantic-Aware Correlation Modeling for UAV Tracking**
+<img width="767" height="377" alt="image" src="https://github.com/user-attachments/assets/9656f881-a949-455a-bcdd-a28259488970" />
 
 ## Let's Get Started
 
