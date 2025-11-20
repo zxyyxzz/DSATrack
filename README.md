@@ -3,7 +3,6 @@
 The official PyTorch implementation of our **NeurIPS 2025** paper:
 
 **Dynamic Semantic-Aware Correlation Modeling for UAV Tracking**
-<img width="767" height="377" alt="image" src="https://github.com/user-attachments/assets/9656f881-a949-455a-bcdd-a28259488970" />
 
 ## Let's Get Started
 
@@ -15,7 +14,7 @@ The official PyTorch implementation of our **NeurIPS 2025** paper:
 
   - Clone our repository to your local project directory.
 
-  - Download the pre-trained weights from [MAE](https://github.com/facebookresearch/mae) or [DeiT](https://github.com/facebookresearch/deit/blob/main/README_deit.md), and place the files into the `pretrained_models` directory under GRM project path. You may want to try different pre-trained weights, so I list the links of pre-trained models integrated in this project.
+  - Download the pre-trained weights from [MAE](https://github.com/facebookresearch/mae) or [DeiT](https://github.com/facebookresearch/deit/blob/main/README_deit.md), and place the files into the `pretrained_models` directory under DSATrack project path. You may want to try different pre-trained weights, so I list the links of pre-trained models integrated in this project.
 
     | Backbone Type |                   Model File                   |                       Checkpoint Link                        |
     | :-----------: | :--------------------------------------------: | :----------------------------------------------------------: |
@@ -51,8 +50,8 @@ The official PyTorch implementation of our **NeurIPS 2025** paper:
   We use conda to manage the environment.
 
   ```
-  conda create --name grm python=3.9
-  conda activate grm
+  conda create --name dsatrack python=3.9
+  conda activate dsatrack
   bash install.sh
   ```
   
@@ -60,19 +59,19 @@ The official PyTorch implementation of our **NeurIPS 2025** paper:
 
   - Training DSATrack-ViT-B
     ```
-    python tracking/train.py --script grm --config vitb_256 --mode multiple --nproc 8 --use_wandb 0
+    python tracking/train.py --script dsatrack --config vitb_256 --mode multiple --nproc 8 --use_wandb 0
     ```
 
   - Training pruned variants of DSATrack
 
     ```
-    python tracking/train.py --script grm_stu --config vitb_d8 --mode multiple --nproc 8 --use_wandb 0
+    python tracking/train.py --script dsatrack_stu --config vitb_d8 --mode multiple --nproc 8 --use_wandb 0
 
-    python tracking/train.py --script grm_stu --config vitb_d7 --mode multiple --nproc 8 --use_wandb 0
+    python tracking/train.py --script dsatrack_stu --config vitb_d7 --mode multiple --nproc 8 --use_wandb 0
 
-    python tracking/train.py --script grm_stu --config vitb_d6 --mode multiple --nproc 8 --use_wandb 0
+    python tracking/train.py --script dsatrack_stu --config vitb_d6 --mode multiple --nproc 8 --use_wandb 0
 
-    python tracking/train.py --script grm_stu --config vitb_d4 --mode multiple --nproc 8 --use_wandb 0
+    python tracking/train.py --script dsatrack_stu --config vitb_d4 --mode multiple --nproc 8 --use_wandb 0
     ```
 
 - ### Evaluation
@@ -80,9 +79,9 @@ The official PyTorch implementation of our **NeurIPS 2025** paper:
   - DTB70, UAVDT, VisDrone2018, UAV123
   
     ```
-    python tracking/test.py --tracker_name grm --tracker_param vitb_256 --dataset_name dtb70 --threads 32 --num_gpus 8
-    python tracking/test.py --tracker_name grm --tracker_param vitb_256 --dataset_name uavdt --threads 32 --num_gpus 8
-    python tracking/test.py --tracker_name grm --tracker_param vitb_256 --dataset_name visdrone --threads 32 --num_gpus 8
-    python tracking/test.py --tracker_name grm --tracker_param vitb_256 --dataset_name uav123 --threads 32 --num_gpus 8
+    python tracking/test.py --tracker_name dsatrack --tracker_param vitb_256 --dataset_name dtb70 --threads 32 --num_gpus 8
+    python tracking/test.py --tracker_name dsatrack --tracker_param vitb_256 --dataset_name uavdt --threads 32 --num_gpus 8
+    python tracking/test.py --tracker_name dsatrack --tracker_param vitb_256 --dataset_name visdrone --threads 32 --num_gpus 8
+    python tracking/test.py --tracker_name dsatrack --tracker_param vitb_256 --dataset_name uav123 --threads 32 --num_gpus 8
     python tracking/analysis_results.py
     ```
