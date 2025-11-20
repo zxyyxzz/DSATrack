@@ -43,7 +43,7 @@ def run_tracker(tracker_names, tracker_params, run_ids=None, dataset_names='otb'
 
 def main():
     parser = argparse.ArgumentParser(description='Run tracker on sequence or dataset.')
-    parser.add_argument('--tracker_name', type=str, nargs='+', help='Name(s) of tracking method.', default=['grm_stu'])
+    parser.add_argument('--tracker_name', type=str, nargs='+', help='Name(s) of tracking method.', default=['dsatrack_stu'])
     parser.add_argument('--tracker_param', type=str, nargs='+', help='Name(s) of config file.', default=['vitb_d8'])
     parser.add_argument('--runid', type=int, default=[None, None, None, None, None, None], help='The run id.', )
     parser.add_argument('--dataset_name', type=str, nargs='+', default=['dtb70'], help='Name of dataset (otb, nfs, uav, tpl, vot, tn, gott, gotv, lasot).')
@@ -59,7 +59,8 @@ def main():
     except:
         seq_name = args.sequence
     
-    args.runid = [i for i in range(345, 351)]
+    args.runid = [350]
+    # args.runid = [i for i in range(345, 351)]
     tracker_num = len(args.runid)
 
     if isinstance(args.tracker_param, str):

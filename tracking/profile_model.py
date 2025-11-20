@@ -22,7 +22,7 @@ def parse_args():
     """
     parser = argparse.ArgumentParser(description='Parse args for training')
     # for train
-    parser.add_argument('--script', type=str, default='grm_stu', choices=['grm', 'grm_stu'],
+    parser.add_argument('--script', type=str, default='dsatrack_stu', choices=['dsatrack', 'dsatrack_stu'],
                         help='training script name')
     parser.add_argument('--config', type=str, default='vitb_d8', help='yaml configure file name')
     args = parser.parse_args()
@@ -103,9 +103,9 @@ if __name__ == "__main__":
     x_sz = cfg.TEST.SEARCH_SIZE
     templates_num = cfg.TEST.TEMPLATE_NUMBER
 
-    if args.script == "grm":
+    if args.script == "dsatrack":
         model_module = importlib.import_module('lib.models')
-        model_constructor = model_module.build_grm
+        model_constructor = model_module.build_dsatrack
         model = model_constructor(cfg, training=False)
         # get the template and search
         template = torch.randn(bs, 3, z_sz, z_sz)
@@ -121,9 +121,9 @@ if __name__ == "__main__":
         if merge_layer <= 0:
             evaluate_vit(model, template, search, templates_num)
     
-    elif args.script == "grm_stu":
+    elif args.script == "dsatrack_stu":
         model_module = importlib.import_module('lib.models')
-        model_constructor = model_module.build_grm_stu
+        model_constructor = model_module.build_dsatrack_stu
         model = model_constructor(cfg, training=False)
         # get the template and search
         template = torch.randn(bs, 3, z_sz, z_sz)

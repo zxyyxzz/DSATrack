@@ -56,7 +56,7 @@ def build_dataloaders(cfg, settings):
     output_sz = settings.output_sz
     search_area_factor = settings.search_area_factor
 
-    data_processing_train = processing.GRMProcessing(search_area_factor=search_area_factor,
+    data_processing_train = processing.DSATrackProcessing(search_area_factor=search_area_factor,
                                                      output_sz=output_sz,
                                                      center_jitter_factor=settings.center_jitter_factor,
                                                      scale_jitter_factor=settings.scale_jitter_factor,

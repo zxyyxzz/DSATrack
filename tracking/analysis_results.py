@@ -1,26 +1,4 @@
 # import matplotlib.pyplot as plt
-#
-# plt.rcParams['figure.figsize'] = [8, 8]
-#
-# import _init_paths
-# from lib.test.analysis.plot_results import plot_results, print_results
-# from lib.test.evaluation import get_dataset, trackerlist
-#
-# trackers = []
-# dataset_name = 'lasot'
-# resolution = 256
-# for i in range(350, 351):
-#
-#     trackers.extend(trackerlist(name='grm', parameter_name=f'vitb_{resolution}_ep300_{i}', dataset_name=dataset_name,
-#                                 run_ids=None, display_name=f'vitb_{resolution}_ep300_{i}'))
-#     # trackers.extend(trackerlist(name='grm', parameter_name='vitl_320_ep300', dataset_name='NOTU',
-#     #                             run_ids=None, display_name='vitl_320_ep300'))
-#
-#     dataset = get_dataset(dataset_name)
-#     print_results(trackers, dataset, dataset_name, merge_results=True, plot_types=('success', 'prec'), avist=False)
-# #
-import _init_paths
-# import matplotlib.pyplot as plt
 # plt.rcParams['figure.figsize'] = [8, 8]
 
 from lib.test.analysis.plot_results import plot_results, print_results, print_per_sequence_results
@@ -33,10 +11,10 @@ trackers = []
 # dataset_name = 'avist'
 # dataset_name = 'lasot'
 # dataset_name = 'avist'
-dataset_name = 'uav123'
+# dataset_name = 'uav123'
 # dataset_name = 'uav20l'
 # dataset_name = 'uav123_10fps'
-# dataset_name = 'dtb70'
+dataset_name = 'dtb70'
 # dataset_name = 'visdrone'
 # dataset_name = 'uavdt'
 # dataset_name = 'nfs'
@@ -61,8 +39,8 @@ dataset_name = 'uav123'
 # trackers.extend(trackerlist('dimp', 'prdimp18', None, range(0,5), 'PrDiMP18'))
 # trackers.extend(trackerlist('dimp', 'prdimp50', None, range(0,5), 'PrDiMP50'))
 """ostrack"""
-trackers.extend(trackerlist(name='grm_stu', parameter_name='vitb_d4_350', dataset_name=dataset_name,
-                            run_ids=None, display_name='vitb_d4_350'))
+trackers.extend(trackerlist(name='dsatrack_stu', parameter_name='vitb_d7_346', dataset_name=dataset_name,
+                            run_ids=None, display_name='vitb_d7_346'))
 # trackers.extend(trackerlist(name='ostrack', parameter_name='vitb_384_mae_ce_32x4_ep300', dataset_name=dataset_name,
 #                             run_ids=None, display_name='OSTrack384'))
 

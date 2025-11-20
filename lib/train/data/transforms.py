@@ -30,7 +30,7 @@ class Transform:
         new_roll (bool): If False, then no new random roll is performed, and the saved result from the previous roll
                          is used instead. Default: True.
 
-    Check the GRMProcessing class for examples.
+    Check the DSATrackProcessing class for examples.
     """
 
     def __init__(self, *transforms):

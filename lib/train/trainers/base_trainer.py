@@ -84,12 +84,11 @@ class BaseTrainer:
             try:
                 if self.settings.using_classifiers != 0:
                     dest_path = os.path.join(self._checkpoint_dir, self.settings.project_path)
-                    initial_path = dest_path.replace('grm_class', 'grm')
                     if not os.path.exists(dest_path):
                         os.makedirs(dest_path)
-                    initial_ckpt = os.path.join(initial_path,
-                                                'GRM_ep%04d.pth.tar' % (self.settings.initial_epoch))
-                    dest_ckpt = os.path.join(dest_path, 'GRM_ep%04d.pth.tar' % (self.settings.initial_epoch))
+                    initial_ckpt = os.path.join(dest_path,
+                                                'DSATrack_ep%04d.pth.tar' % (self.settings.initial_epoch))
+                    dest_ckpt = os.path.join(dest_path, 'DSATrack_ep%04d.pth.tar' % (self.settings.initial_epoch))
                     if not os.path.exists(dest_ckpt):
                         shutil.copy(initial_ckpt, dest_path)
                     # print(dest_path, '????????????????')

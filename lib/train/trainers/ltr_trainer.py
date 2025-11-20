@@ -93,7 +93,7 @@ class LTRTrainer(BaseTrainer):
             data['epoch'] = self.epoch
             data['settings'] = self.settings
             # Forward pass
-            if self.actor.__class__.__name__ == 'GRMActor':
+            if self.actor.__class__.__name__ == 'DSATrackActor':
                 loss, stats = self.actor(data)
             else:
                 loss, stats = self.actor(data, remove_rate_cur_epoch)

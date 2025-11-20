@@ -8,10 +8,10 @@ from torch.nn.functional import l1_loss
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 # Network related
-from lib.models.grm import build_grm
-from lib.models.grm import build_grm_stu
+from lib.models.dsatrack import build_dsatrack
+from lib.models.dsatrack import build_dsatrack_stu
 # Forward propagation related
-from lib.train.actors import GRMActor
+from lib.train.actors import DSATrackActor
 # Train pipeline related
 from lib.train.trainers import LTRTrainer
 # Loss function related
@@ -53,10 +53,10 @@ def run(settings):
         cfg.ckpt_dir = settings.save_dir
 
     # Create network
-    if settings.script_name == 'grm':
-        net = build_grm(cfg)
-    elif settings.script_name == 'grm_stu':
-        net = build_grm_stu(cfg)
+    if settings.script_name == 'dsatrack':
+        net = build_dsatrack(cfg)
+    elif settings.script_name == 'dsatrack_stu':
+        net = build_dsatrack_stu(cfg)
     else:
         raise ValueError('ERROR: illegal script name')
 
@@ -72,7 +72,7 @@ def run(settings):
     settings.distill = getattr(cfg.TRAIN, 'DISTILL', False)
     settings.distill_loss_type = getattr(cfg.TRAIN, 'DISTILL_LOSS_TYPE', 'KL')
     # Loss functions and actors
-    if 'grm' in settings.script_name and 'class' not in settings.script_name:
+    if 'dsatrack' in settings.script_name:
         focal_loss = FocalLoss()
         # objective = {'giou': giou_loss, 'l1': l1_loss, 'focal': focal_loss, 'cls': BCEWithLogitsLoss()}
         # loss_weight = {'giou': cfg.TRAIN.GIOU_WEIGHT, 'l1': cfg.TRAIN.L1_WEIGHT, 'focal': 1., 'cls': 1.}
@@ -81,19 +81,7 @@ def run(settings):
         loss_weight = {'giou': cfg.TRAIN.GIOU_WEIGHT, 'l1': cfg.TRAIN.L1_WEIGHT, 'focal': 1., 'cls': 1.0,
                        'iou': 2.}
         drop_ratio = cfg.MODEL.BACKBONE.DROP_RATIO
-        actor = GRMActor(net=net, objective=objective, loss_weight=loss_weight, settings=settings, cfg=cfg, drop_ratio=drop_ratio)
-    elif 'grm_class' in settings.script_name:
-        focal_loss = FocalLoss()
-        # objective = {'giou': giou_loss, 'l1': l1_loss, 'focal': focal_loss, 'cls': BCEWithLogitsLoss()}
-        # loss_weight = {'giou': cfg.TRAIN.GIOU_WEIGHT, 'l1': cfg.TRAIN.L1_WEIGHT, 'focal': 1., 'cls': 1.}
-        objective = {'giou': giou_loss, 'l1': l1_loss, 'focal': focal_loss, 'cls': BCEWithLogitsLoss(),
-                     'iou': MSELoss()}
-        loss_weight = {'giou': cfg.TRAIN.GIOU_WEIGHT, 'l1': cfg.TRAIN.L1_WEIGHT, 'focal': 1., 'cls': 1.0,
-                       'iou': 2.}
-        drop_ratio = cfg.MODEL.BACKBONE.DROP_RATIO
-        actor = GRMActor(net=net, objective=objective, loss_weight=loss_weight, settings=settings, cfg=cfg, drop_ratio=drop_ratio)
-        actor.eval()
-        actor.train_exclude_classifier()
+        actor = DSATrackActor(net=net, objective=objective, loss_weight=loss_weight, settings=settings, cfg=cfg, drop_ratio=drop_ratio)
     else:
         raise ValueError('ERROR: illegal script name')
 

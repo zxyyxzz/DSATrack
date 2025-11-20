@@ -13,7 +13,7 @@ def parse_args():
 
     parser = argparse.ArgumentParser(description='parse args for training')
     # For train
-    parser.add_argument('--script', type=str, default='grm', help='training script name')
+    parser.add_argument('--script', type=str, default='dsatrack', help='training script name')
     parser.add_argument('--config', type=str, default='vitb_256_ep300', help='yaml configure file name')
     parser.add_argument('--save_dir', type=str, default='./output',
                         help='root directory to save checkpoints, logs, and tensorboard')

@@ -42,7 +42,7 @@ class BaseProcessing:
         raise NotImplementedError
 
 
-class GRMProcessing(BaseProcessing):
+class DSATrackProcessing(BaseProcessing):
     """
     The processing class used for training LittleBoy. The images are processed in the following way.
 
